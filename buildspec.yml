@@ -1,26 +1,19 @@
 version: 0.2
 
 phases:
-  install:
-    runtime-versions:
-      docker: 20
-    commands:
-      - echo Verifying AWS CLI and Docker installation...
-      - aws --version
-      - docker --version
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 258044991766.dkr.ecr.ap-southeast-1.amazonaws.com
+      - aws ecr get-login-password --region ap-southeast-1 | docker login --username AWS --password-stdin 415619022182.dkr.ecr.ap-southeast-1.amazonaws.com
   build:
     commands:
       - echo Building Docker image...
-      - docker build -t accad5-test:latest .
-      - docker tag accad5-test:latest 258044991766.dkr.ecr.ap-southeast-1.amazonaws.com/accad5-test:latest
+      - docker build -t microservice:latest .
+      - docker tag microservice:latest 415619022182.dkr.ecr.ap-southeast-1.amazonaws.com/microservice:latest
   post_build:
     commands:
       - echo Pushing Docker image to ECR...
-      - docker push 258044991766.dkr.ecr.ap-southeast-1.amazonaws.com/accad5-test:latest
+      - docker push 415619022182.dkr.ecr.ap-southeast-1.amazonaws.com/microservice:latest
 
 artifacts:
   files:
