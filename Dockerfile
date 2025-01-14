@@ -1,21 +1,24 @@
-# Description: Dockerfile for the Flask API
-# Specify the base image
 
-FROM python:alpine
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Copy the current directory contetnts into the container at /app
-COPY . /app
+# Copy requirements file
+COPY requirements.txt .
 
-# Install any needed packages specified in requirements.txt
-RUN pip install -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Make port 80 available to the world outside this container
-# This acts as documentation, because the port is not actually exposed
+# Copy application code
+COPY . .
 
-EXPOSE 80
+# Expose port
+EXPOSE 8000
 
-# Defining commands to run the app
+# Set environment variables
+ENV PYTHONUNBUFFERED=1
+
+# Run the application
 CMD ["python", "app.py"]
